@@ -32,12 +32,34 @@ ageResult.innerText="Enter valid DOB";
 return;
 }
 
-let diff=now-dob;
+let years = now.getFullYear() - dob.getFullYear();
+let months = now.getMonth() - dob.getMonth();
+let days = now.getDate() - dob.getDate();
+let hours = now.getHours() - dob.getHours();
+let minutes = now.getMinutes() - dob.getMinutes();
 
-let days=Math.floor(diff/(1000*60*60*24));
-let years=Math.floor(days/365);
-let minutes=Math.floor(diff/(1000*60));
+if(minutes < 0){
+minutes += 60;
+hours--;
+}
 
-ageResult.innerText=
-`${years} years • ${days} days • ${minutes} minutes`;
+if(hours < 0){
+hours += 24;
+days--;
+}
+
+if(days < 0){
+months--;
+let prevMonthDays =
+new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+days += prevMonthDays;
+}
+
+if(months < 0){
+months += 12;
+years--;
+}
+
+ageResult.innerText =
+`${years} Years ${months} Months ${days} Days ${minutes} Minutes`;
 }
